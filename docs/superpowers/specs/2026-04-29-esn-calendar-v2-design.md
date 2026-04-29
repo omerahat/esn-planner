@@ -4,15 +4,16 @@
 This document outlines the design and architectural updates for the ESN Event Planner. The goal is to evolve the proof-of-concept into a shareable, branded, and more functional calendar tool for ESN chapters.
 
 ## Bug Fixes
-- **Event Save Issue:** Investigate and fix the "Save" button functionality to ensure new events are properly created and persisted.
 - **PNG Export Issue:** Debug and fix the `html2canvas` export functionality. Ensure the target reference is correctly captured and all assets (fonts, images) are rendered properly in the exported PNG.
 
 ## 1. Data Architecture & Sharing (URL State)
 - **Current State:** Data resides solely in `localStorage`.
 - **New Flow:**
+  - Data will **continue to be persisted locally** in `localStorage` as the primary data store.
   - A "Share Link" button will be added to the header.
   - On click, the current application state (Events, Members, Date Ranges) will be serialized to JSON, compressed using `lz-string`, and appended to the URL as a query parameter (e.g., `?data=compressed_string`).
   - Upon initialization, the app will check for the `data` parameter in the URL. If present, it will decompress it, decode the JSON, and override the local state, effectively loading the shared calendar.
+  - A **"Reset Calendar"** button will be added. When clicked (after a confirmation prompt), it will clear the `localStorage` and reset the application state to empty, allowing the user to start over.
 
 ## 2. Event Management Updates
 - **All-Day Events:** The "Time" field will be completely removed from the data model and UI. All events will be treated as all-day blocks.
