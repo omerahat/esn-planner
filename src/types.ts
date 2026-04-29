@@ -6,11 +6,10 @@ export type Member = {
 };
 
 export type MemberStatus =
-  | "Yönetim Kurulu"
-  | "Denetim Kurulu"
-  | "YK Destek"
-  | "Üye"
-  | "Aday Üye";
+  | "Board"
+  | "Board Supporter"
+  | "Candidate"
+  | "Active";
 
 export type EventCategoryId = "event-comm" | "si-comm" | "special-days" | "esn-turkiye-events";
 

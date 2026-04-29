@@ -11,6 +11,7 @@ type MembersPanelProps = {
 const DraggableMember = ({ member }: { member: Member }) => {
   const [avatarIndex, setAvatarIndex] = useState(0);
   const avatarCandidates = getMemberAvatarCandidates(member.name);
+  const hasFallbackImage = avatarIndex < avatarCandidates.length;
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: `member:${member.id}`,
   });
@@ -29,12 +30,22 @@ const DraggableMember = ({ member }: { member: Member }) => {
       {...listeners}
       {...attributes}
     >
-      <img
-        src={avatarCandidates[Math.min(avatarIndex, avatarCandidates.length - 1)]}
-        alt={member.name}
-        onError={() => setAvatarIndex((current) => Math.min(current + 1, avatarCandidates.length - 1))}
-        className="h-8 w-8 rounded-full border border-slate-200 bg-slate-50 object-cover"
-      />
+      {hasFallbackImage ? (
+        <img
+          src={avatarCandidates[avatarIndex]}
+          alt={member.name}
+          onError={() => setAvatarIndex((current) => current + 1)}
+          className="h-8 w-8 rounded-full border border-slate-200 bg-slate-50 object-cover"
+        />
+      ) : (
+        <span
+          className="inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold text-white"
+          style={{ backgroundColor: member.color }}
+          aria-hidden
+        >
+          {member.name.charAt(0).toUpperCase()}
+        </span>
+      )}
       <span>
         <span className="block text-sm font-medium text-brand-navy">{member.name}</span>
         <span className="block text-xs text-slate-500">{member.status}</span>

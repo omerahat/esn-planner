@@ -17,6 +17,7 @@ const getMembersById = (members: Member[]): Record<string, Member> =>
   }, {});
 
 function App() {
+  const logoUrl = `${import.meta.env.BASE_URL}esn-logo.png`;
   const {
     members,
     events,
@@ -105,7 +106,7 @@ function App() {
         <header className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <img
-              src="/esn-logo.png"
+              src={logoUrl}
               alt="ESN Logo"
               onError={(event) => {
                 event.currentTarget.style.display = "none";

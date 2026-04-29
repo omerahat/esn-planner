@@ -14,7 +14,7 @@ const sampleState: PlannerStateV2 = {
       assignedMemberIds: [],
     },
   ],
-  members: [{ id: "1", name: "azra", color: "#2e3192", status: "Yönetim Kurulu" }],
+  members: [{ id: "1", name: "azra", color: "#2e3192", status: "Active" }],
   specialDateRanges: [{ id: "r1", startDate: "2026-04-01", endDate: "2026-04-03", description: "Range", color: "#00aeef" }],
   viewState: { viewDateIso: "2026-04-01" },
 };

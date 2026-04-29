@@ -6,7 +6,25 @@ const toKebabCase = (name: string): string =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
+const toLooseFileName = (name: string): string =>
+  name
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-");
+
+const withBaseUrl = (relativePath: string): string => {
+  const base = import.meta.env.BASE_URL;
+  return `${base}${relativePath}`;
+};
+
 export const getMemberAvatarCandidates = (name: string): string[] => {
   const slug = toKebabCase(name);
-  return [`/avatars/${slug}.jpg`, `/avatars/${slug}.png`, "/avatars/default.png"];
+  const loose = toLooseFileName(name);
+  return [
+    withBaseUrl(`avatars/${encodeURIComponent(slug)}.jpg`),
+    withBaseUrl(`avatars/${encodeURIComponent(slug)}.png`),
+    withBaseUrl(`avatars/${encodeURIComponent(loose)}.jpg`),
+    withBaseUrl(`avatars/${encodeURIComponent(loose)}.png`),
+    withBaseUrl("avatars/default.png"),
+  ];
 };

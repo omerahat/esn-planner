@@ -1,45 +1,32 @@
 import type { Member, PlannerEvent } from "../types";
-import { MEMBER_STATUSES } from "../lib/plannerConfig";
-
-const memberNames = [
-  "azra",
-  "deniz",
-  "nehir",
-  "duru",
-  "ezgisu",
-  "diego",
-  "ece",
-  "elif",
-  "odi",
-  "sera",
-  "yağmur jr",
-  "yaren",
-  "yiğitcan",
-  "anas",
-  "beyza",
-  "ece 2",
-  "hilal",
-  "katre",
-  "meryem",
-  "meyra",
-  "rüveyda",
-  "ömer",
-  "ecrin",
-  "odi",
-  "azra 2",
-  "doğa",
-  "hilal",
-  "rüzgar",
-  "yusuf",
-];
 
 const palette = ["#2e3192", "#00aeef", "#7ac143", "#f47b20", "#ae008c"];
 
-export const initialMembers: Member[] = memberNames.map((name, index) => ({
+const memberSeeds: Array<{ name: string; status: Member["status"] }> = [
+  { name: "Anas Al Hassoun", status: "Active" },
+  { name: "Ecrin Sezer", status: "Active" },
+  { name: "Meyra Karadere", status: "Active" },
+  { name: "Yiğitcan Dağlı", status: "Board Supporter" },
+  { name: "Ayça Rüzgar Lafcı", status: "Active" },
+  { name: "Meryem Yapıcı", status: "Active" },
+  { name: "Deniz Gülse Ak", status: "Board" },
+  { name: "Ece Yalçın", status: "Active" },
+  { name: "Rüveyda Karakurt", status: "Candidate" },
+  { name: "Katre Tosun", status: "Active" },
+  { name: "Ömer Ahat", status: "Active" },
+  { name: "Ece Yılmaz", status: "Active" },
+  { name: "Elif Saltık", status: "Board Supporter" },
+  { name: "Diego Andres Arias Castro", status: "Active" },
+  { name: "Azra Naz Eralp", status: "Board Supporter" },
+  { name: "Odelli Eroğlu", status: "Active" },
+  { name: "Nehir Özyurt", status: "Board" },
+];
+
+export const initialMembers: Member[] = memberSeeds.map((member, index) => ({
   id: String(index + 1),
-  name,
+  name: member.name,
   color: palette[index % palette.length],
-  status: MEMBER_STATUSES[index % MEMBER_STATUSES.length],
+  status: member.status,
 }));
 
 export const initialEvents: PlannerEvent[] = [

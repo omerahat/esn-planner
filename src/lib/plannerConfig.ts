@@ -13,11 +13,10 @@ export const EVENT_CATEGORIES: Array<{
 ];
 
 export const MEMBER_STATUSES: MemberStatus[] = [
-  "Yönetim Kurulu",
-  "Denetim Kurulu",
-  "YK Destek",
-  "Üye",
-  "Aday Üye",
+  "Board",
+  "Board Supporter",
+  "Candidate",
+  "Active",
 ];
 
 export const getCategoryMeta = (categoryId: EventCategoryId) =>
