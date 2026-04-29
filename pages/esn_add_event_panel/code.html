@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESN Unity - Add Event</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fcf8ff",
+                        "secondary": "#b30069",
+                        "primary-container": "#00aeef",
+                        "secondary-fixed": "#ffd9e4",
+                        "outline-variant": "#bdc8d1",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e1e0ff",
+                        "inverse-on-surface": "#f1efff",
+                        "on-tertiary-fixed": "#321200",
+                        "secondary-fixed-dim": "#ffb0cc",
+                        "tertiary": "#994700",
+                        "primary-fixed-dim": "#82cfff",
+                        "on-tertiary-container": "#602a00",
+                        "surface": "#fcf8ff",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#003e58",
+                        "inverse-primary": "#82cfff",
+                        "on-surface": "#04006d",
+                        "secondary-container": "#e00085",
+                        "on-surface-variant": "#3e4850",
+                        "tertiary-fixed": "#ffdbc8",
+                        "surface-dim": "#d7d7ff",
+                        "primary": "#00658d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e7e6ff",
+                        "surface-container": "#eeecff",
+                        "primary-fixed": "#c6e7ff",
+                        "on-background": "#04006d",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#fc8127",
+                        "surface-container-low": "#f5f2ff",
+                        "background": "#fcf8ff",
+                        "on-secondary-container": "#fffbff",
+                        "on-secondary-fixed-variant": "#8d0051",
+                        "on-secondary-fixed": "#3e0021",
+                        "inverse-surface": "#1e2084",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#00658d",
+                        "outline": "#6e7881",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb68b",
+                        "on-primary-fixed-variant": "#004c6b",
+                        "on-primary-fixed": "#001e2d",
+                        "surface-variant": "#e1e0ff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#753400"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "3xl": "64px",
+                        "md": "16px",
+                        "margin": "32px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "2xl": "48px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "label-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen overflow-hidden flex flex-col font-['Plus_Jakarta_Sans'] antialiased">
+<!-- TopNavBar (Dimmed Context) -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm fixed top-0 w-full z-10 flex justify-between items-center px-6 h-16 opacity-40 pointer-events-none">
+<div class="flex items-center gap-6 h-full">
+<span class="text-xl font-bold text-[#00aeef] font-headline-md text-primary-container">ESN Unity</span>
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-2 py-1 rounded font-label-lg text-on-surface-variant" href="#">Dashboard</a>
+<a class="text-[#00aeef] border-b-2 border-[#00aeef] pb-1 h-full flex items-center font-label-lg text-primary-container" href="#">Events</a>
+<a class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-2 py-1 rounded font-label-lg text-on-surface-variant" href="#">Members</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none font-body-sm text-on-surface w-64" disabled="" placeholder="Search..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant rounded-full" disabled=""><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-on-surface-variant rounded-full" disabled=""><span class="material-symbols-outlined">settings</span></button>
+<button class="bg-primary-container text-on-primary px-4 py-2 rounded-lg font-label-lg" disabled="">Create Event</button>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="close-up portrait of a smiling young man in a blue shirt, neutral background, bright even lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUztqihF_ytL9JRM-44pD5OFKLQa1f-npkP1GyNwRhjWGoWJOzICaTBmJLHWyIGa5PG07UGDkmxVCpBqAtiSDb-IBimq3Rn8t8D4ekTw_JzEyrMMkwKs9fOu8EDTSkJvamJKzgr_yPz8Yh2ThA5yxvSA8JXrQkrdIfX7fog1jhRnFp6WVgYT79V4kzBH0qXqAomLnSqzJ7Sa0T1rSPNnePrO3_vzt1POOd4laf9jbNoHm3FubOyZA96TOBrqWe1Bo5_XWq--l-0wgr"/>
+</div>
+</header>
+<div class="flex flex-1 pt-16">
+<!-- SideNavBar (Dimmed Context) -->
+<aside class="hidden md:flex flex-col fixed left-0 top-16 h-[calc(100vh-64px)] w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-4 opacity-40 pointer-events-none z-10">
+<div class="mb-8 px-2">
+<h2 class="text-lg font-black text-[#00aeef] font-headline-md text-primary-container">ESN Section</h2>
+<p class="font-body-sm text-on-surface-variant">Unity &amp; Exchange</p>
+</div>
+<button class="w-full bg-primary-container text-on-primary py-2 rounded-lg font-label-lg mb-6 flex items-center justify-center gap-2" disabled="">
+<span class="material-symbols-outlined">add</span> New Event
+            </button>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 rounded-lg font-label-md text-on-surface-variant" disabled="" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-[#00aeef]/10 text-[#00aeef] rounded-lg font-label-md text-primary-container" disabled="" href="#">
+<span class="material-symbols-outlined">calendar_month</span> Events
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 rounded-lg font-label-md text-on-surface-variant" disabled="" href="#">
+<span class="material-symbols-outlined">group</span> Members
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 rounded-lg font-label-md text-on-surface-variant" disabled="" href="#">
+<span class="material-symbols-outlined">forum</span> Messaging
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 rounded-lg font-label-md text-on-surface-variant" disabled="" href="#">
+<span class="material-symbols-outlined">analytics</span> Reports
+                </a>
+</nav>
+<div class="mt-auto flex flex-col gap-2 pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 rounded-lg font-label-md text-on-surface-variant" disabled="" href="#">
+<span class="material-symbols-outlined">help</span> Help
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 rounded-lg font-label-md text-on-surface-variant" disabled="" href="#">
+<span class="material-symbols-outlined">logout</span> Logout
+                </a>
+</div>
+</aside>
+<!-- Main Content Area (Dimmed Background Canvas) -->
+<main class="flex-1 ml-0 md:ml-64 p-6 bg-surface-bright relative z-0">
+<!-- Simulated Background Content (Blurred/Dimmed via overlay) -->
+<div class="absolute inset-0 bg-surface-bright/60 backdrop-blur-sm z-20"></div>
+<div class="max-w-6xl mx-auto opacity-30 pointer-events-none">
+<h1 class="font-headline-lg text-on-surface mb-6">Upcoming Events</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Dummy Cards -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 shadow-sm">
+<div class="h-32 bg-surface-container rounded-lg mb-4"></div>
+<h3 class="font-headline-md text-on-surface mb-2">Welcome Party</h3>
+<p class="font-body-sm text-on-surface-variant">Sep 15, 2023</p>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 shadow-sm">
+<div class="h-32 bg-surface-container rounded-lg mb-4"></div>
+<h3 class="font-headline-md text-on-surface mb-2">City Tour</h3>
+<p class="font-body-sm text-on-surface-variant">Sep 18, 2023</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Overlay / Slide-over Panel -->
+<div class="fixed inset-0 z-50 flex justify-end">
+<!-- Clickaway Backdrop -->
+<div class="absolute inset-0 bg-on-surface/20 transition-opacity"></div>
+<!-- Slide-over Content -->
+<section class="relative w-full max-w-md bg-surface-container-lowest h-full shadow-2xl flex flex-col border-l border-outline-variant animate-[slideIn_0.3s_ease-out_forwards]">
+<!-- Header -->
+<header class="flex items-center justify-between px-6 py-4 border-b border-outline-variant bg-surface-container-lowest">
+<h2 class="font-headline-md text-on-surface">Create New Event</h2>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</header>
+<!-- Form Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+<!-- Event Details Section -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-on-surface" for="eventName">Event Name</label>
+<input class="w-full px-4 py-3 bg-surface-bright border border-outline-variant rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none font-body-md text-on-surface transition-all" id="eventName" placeholder="e.g. International Dinner" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-on-surface" for="eventDate">Event Date</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">calendar_today</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-bright border border-outline-variant rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none font-body-md text-on-surface transition-all appearance-none" id="eventDate" type="date"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-on-surface" for="eventLocation">Location</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">location_on</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-bright border border-outline-variant rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none font-body-md text-on-surface transition-all" id="eventLocation" placeholder="Where is it happening?" type="text"/>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<hr class="border-outline-variant"/>
+<!-- Assign Members Section -->
+<div class="flex flex-col gap-4">
+<div>
+<h3 class="font-label-lg text-on-surface mb-1">Assign Members</h3>
+<p class="font-body-sm text-on-surface-variant">Select committee members to organize this event.</p>
+</div>
+<!-- Search Members -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container border border-outline-variant rounded-full focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none font-body-sm text-on-surface" placeholder="Search members..." type="text"/>
+</div>
+<!-- Member List (Toggleable) -->
+<div class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-2 rounded-lg border border-outline-variant/50 p-2 bg-surface-bright">
+<!-- Member Item 1 (Selected) -->
+<label class="flex items-center justify-between p-2 hover:bg-surface-container rounded-lg cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<img alt="Sarah J." class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="portrait of a young woman smiling, soft natural lighting, blurred background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRuP0X4Dsp4OCMIGSi1aseNK2-XygWYIIjCn1oYU6ERedfaLOeT0Qt6XKhJLvwTGmNd5OivnndVnPdKDsM9CixmfcOmHJBhYgIuK4DnURuPXZkZ0JszvdgngatrQdjDCYn0-z-FKGLMmFYqXjpqMNvfyHn3OGJiMiX5SCdb83EUc2iECXtCCu1wgALvbEE0cltLLIzBjV8Jng7cJXm-YZmi5t9fJmWTTmggahTkCZS_s8rWL7k_P3Q2fuSKQQxSqgrcCtLT_62aMKD"/>
+<div>
+<p class="font-label-lg text-on-surface group-hover:text-primary-container transition-colors">Sarah J.</p>
+<p class="font-body-sm text-on-surface-variant">Event Coordinator</p>
+</div>
+</div>
+<div class="relative flex items-center">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="w-6 h-6 rounded-md border-2 border-primary-container bg-primary-container flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold">check</span>
+</div>
+</div>
+</label>
+<!-- Member Item 2 (Unselected) -->
+<label class="flex items-center justify-between p-2 hover:bg-surface-container rounded-lg cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<img alt="Marco P." class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="portrait of a young man with short hair looking straight at camera, studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoQm5nSmn5UkYbO1sNtJbsvbclme8k2ZQBbuPqtR2n5H_9WPytM78aTGTqJCjsH-PVY8ghLck9IrFXhHzCrPUfUahRzbqL1VcpOMAKucjUCLjuA1YCnb4JciAA2_QpM7sZQRg1s95W6_HLsovNt-R-Zz-5DBbSI0zgEJeixvwecX-1o4We6AfGAWNOSZEpRvdO_sPn0OCfO1CEn57hv4WRyoxIDJFdA4_JeJsUJoGCGlfAY2S8y8P9iiuPxvhhQMk-0NtS2VRxI7JQ"/>
+<div>
+<p class="font-label-lg text-on-surface group-hover:text-primary-container transition-colors">Marco P.</p>
+<p class="font-body-sm text-on-surface-variant">Logistics</p>
+</div>
+</div>
+<div class="relative flex items-center">
+<input class="peer sr-only" type="checkbox"/>
+<div class="w-6 h-6 rounded-md border-2 border-outline-variant bg-surface-bright flex items-center justify-center transition-all peer-checked:bg-primary-container peer-checked:border-primary-container">
+<span class="material-symbols-outlined text-transparent text-[16px] font-bold peer-checked:text-on-primary">check</span>
+</div>
+</div>
+</label>
+<!-- Member Item 3 (Selected) -->
+<label class="flex items-center justify-between p-2 hover:bg-surface-container rounded-lg cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<img alt="Elena G." class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="portrait of a woman with red hair looking friendly, outdoor lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWB3pQrgXXRoO3eFtVUzoTxxF-EVEN0hmTPTOnHJqapInmO_dFJ1kN26uekUHDtjNxmztTmXtCO9sbWh80QDomfUUJDDmOcFAnK4VgJui5LN1zcHubEeg5jvi4cVy1HX2unMab1f1XKW5r3AlCHM8ZyQKFZCpcVvTMef-_KyVzi81miXxEWWUGZGPacOvuDAIzMml0rHKB7xcumq1kFHq2TCceXLbONI2vZna0lxuhl47LuTMqtCcWphExUJSd_q-s82RaVtBRn1Hl"/>
+<div>
+<p class="font-label-lg text-on-surface group-hover:text-primary-container transition-colors">Elena G.</p>
+<p class="font-body-sm text-on-surface-variant">PR &amp; Communications</p>
+</div>
+</div>
+<div class="relative flex items-center">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="w-6 h-6 rounded-md border-2 border-primary-container bg-primary-container flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold">check</span>
+</div>
+</div>
+</label>
+<!-- Member Item 4 (Unselected) -->
+<label class="flex items-center justify-between p-2 hover:bg-surface-container rounded-lg cursor-pointer transition-colors group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-outline-variant bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-label-lg">
+                                    TA
+                                </div>
+<div>
+<p class="font-label-lg text-on-surface group-hover:text-primary-container transition-colors">Tom A.</p>
+<p class="font-body-sm text-on-surface-variant">Treasurer</p>
+</div>
+</div>
+<div class="relative flex items-center">
+<input class="peer sr-only" type="checkbox"/>
+<div class="w-6 h-6 rounded-md border-2 border-outline-variant bg-surface-bright flex items-center justify-center transition-all peer-checked:bg-primary-container peer-checked:border-primary-container">
+<span class="material-symbols-outlined text-transparent text-[16px] font-bold peer-checked:text-on-primary">check</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<footer class="p-6 border-t border-outline-variant bg-surface-container-lowest flex items-center justify-end gap-4 mt-auto">
+<button class="px-6 py-2.5 rounded-lg border border-outline-variant text-on-surface font-label-lg hover:bg-surface-container transition-colors">
+                    Cancel
+                </button>
+<button class="px-6 py-2.5 rounded-lg bg-primary-container text-on-primary font-label-lg hover:bg-primary hover:-translate-y-0.5 shadow-[0_2px_8px_rgba(0,174,239,0.2)] transition-all">
+                    Save Event
+                </button>
+</footer>
+</section>
+</div>
+</body></html>

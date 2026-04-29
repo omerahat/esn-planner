@@ -1,0 +1,15 @@
+Proof of Concept (PoC) Dokümanı: ESN Event Planner (Demo Versiyon)1. Proje Özeti (Executive Summary)Bu proje, ESN şubelerinin aylık etkinlik planlamalarını görselleştirmek için kullanılacak hafif, hızlı ve çalışan bir demo (PoC) uygulamasıdır. Giriş/çıkış sistemleri, karmaşık yetkilendirmeler veya detaylı mekan bilgileri gibi özellikler ilk aşamada devredışı bırakılmıştır. Temel odak: Bir takvim oluşturmak, hızlıca etkinlik girmek, şube üyelerini bu etkinliklere sürükle-bırak ile atamak ve sonuçta bu takvimin görsel çıktısını almaktır.2. Kullanıcı ProfiliTek Tip Kullanıcı (Planlayıcı): Uygulamayı açan kişi doğrudan planlama arayüzüyle karşılaşır. Karmaşık rol (Admin/Üye) ayrımları yoktur. Demo amacı taşıdığı için giren herkes sürükle-bırak yapabilir ve etkinlik ekleyebilir.3. Temel Özellikler (MVP - Minimum Viable Product)3.1. Basit Takvim ArayüzüAylık Görünüm: Klasik, temiz bir aylık ızgara (grid) görünümü.Hızlı Etkinlik Ekleme: Takvimde bir güne tıklandığında sadece "Etkinlik Adı" ve "Saat" soran çok basit bir pop-up. (Örn: "Welcome Party", "21:00"). Karmaşık detaylar (mekan, açıklama) yok.3.2. Sürükle-Bırak (Drag & Drop) GörevlendirmeKişiler Paneli: Ekranın sağ (veya sol) tarafında, şube üyelerinin (isim ve minik avatarlarıyla) bulunduğu sabit bir liste.Sürükle & Atama Yap: Kullanıcı, listeden bir kişinin ismini tutup takvimdeki bir etkinliğin içine sürükleyip bırakarak o kişiyi etkinliğe atar. Etkinliğin üstünde o kişinin avatarı/baş harfi görünür.3.3. Dışa Aktarma (Export)Görsel Çıktı (PNG/JPEG): Planlama bittiğinde "Görseli İndir" butonuna basılarak o ayın planının (ESN renklerinde, atanan kişilerin de göründüğü) sosyal medyada paylaşılabilecek yüksek kaliteli bir PNG çıktısı alınması.4. UI/UX ve Görsel KimlikTema: "Unity & Exchange" tasarım dili.Renk Paleti: * Ana Eylem/Butonlar: ESN Cyan (#00aeef)Arka Plan: Açık gri/beyaz, ferah görünüm (#f8f9fa)Tipografi: Plus Jakarta Sans veya sistemin varsayılan temiz sans-serif fontu.Layout (Düzen): * Sol taraf: Geniş aylık takvim.Sağ taraf: İnsanları sürükleyebileceğimiz "Üyeler" (Members) havuzu.5. Veri Yapısı (Demo İçin Local State Taslağı)Veritabanı kurmaya bile gerek kalmadan, sadece Frontend'de (React State) tutulacak basit JSON veri yapısı:1. Members (Üye Havuzu)[
+  { "id": "1", "name": "Ömer", "color": "#ec008c" },
+  { "id": "2", "name": "Ayşe", "color": "#7ac143" },
+  { "id": "3", "name": "Ali", "color": "#f47c36" }
+]
+2. Events (Etkinlikler)[
+  {
+    "id": "e1",
+    "title": "Welcome Party",
+    "date": "2023-11-05",
+    "time": "21:00",
+    "assigned_members": ["1", "2"] // Ömer ve Ayşe atanmış
+  }
+]
+6. Teknik Başlangıç ÖnerileriFrontend: React.js (Sadece frontend odaklı bir PoC).State Management: Veritabanı yerine React useState veya Zustand ile verileri (etkinlikler ve kişiler) tarayıcı hafızasında (veya sayfa yenilenmesinde kaybolmaması için localStorage'da) tutma.Sürükle-Bırak: @dnd-kit/core veya react-beautiful-dnd (Kişileri listenden takvime atmak için çok ideal).Çıktı Alma: Takvim div'ini resme çevirmek için html2canvas kütüphanesi.

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESN Community - Event Planning Dashboard</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#ffd9e4",
+                    "on-tertiary-fixed": "#321200",
+                    "surface-container-highest": "#e1e0ff",
+                    "surface-container-low": "#f5f2ff",
+                    "on-error": "#ffffff",
+                    "on-surface": "#04006d",
+                    "on-primary-fixed-variant": "#004c6b",
+                    "surface-container-high": "#e7e6ff",
+                    "tertiary-container": "#fc8127",
+                    "on-secondary-container": "#fffbff",
+                    "primary-fixed-dim": "#82cfff",
+                    "surface-bright": "#fcf8ff",
+                    "inverse-primary": "#82cfff",
+                    "on-tertiary-fixed-variant": "#753400",
+                    "outline": "#6e7881",
+                    "surface-variant": "#e1e0ff",
+                    "on-secondary-fixed": "#3e0021",
+                    "surface": "#fcf8ff",
+                    "surface-dim": "#d7d7ff",
+                    "secondary": "#b30069",
+                    "background": "#fcf8ff",
+                    "on-surface-variant": "#3e4850",
+                    "inverse-surface": "#1e2084",
+                    "tertiary-fixed-dim": "#ffb68b",
+                    "on-secondary-fixed-variant": "#8d0051",
+                    "secondary-fixed-dim": "#ffb0cc",
+                    "outline-variant": "#bdc8d1",
+                    "on-primary-fixed": "#001e2d",
+                    "on-background": "#04006d",
+                    "on-primary-container": "#003e58",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#e00085",
+                    "primary-container": "#00aeef",
+                    "surface-tint": "#00658d",
+                    "surface-container": "#eeecff",
+                    "primary": "#00658d",
+                    "primary-fixed": "#c6e7ff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#602a00",
+                    "inverse-on-surface": "#f1efff",
+                    "tertiary": "#994700",
+                    "tertiary-fixed": "#ffdbc8",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "xl": "32px",
+                    "margin": "32px",
+                    "3xl": "64px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "2xl": "48px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "body-sm": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Hide scrollbar for a cleaner sidebar but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen overflow-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)] font-['Plus_Jakarta_SANS'] antialiased">
+<div class="flex items-center gap-8">
+<div class="text-2xl font-black text-[#00aeef] tracking-tight">ESN Community</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-gray-500 hover:text-[#00aeef] transition-colors font-label-lg text-label-lg" href="#">Dashboard</a>
+<a class="text-[#00aeef] font-bold border-b-2 border-[#00aeef] pb-1 font-label-lg text-label-lg" href="#">Calendar</a>
+<a class="text-gray-500 hover:text-[#00aeef] transition-colors font-label-lg text-label-lg" href="#">Members</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<button class="flex items-center gap-2 bg-white border border-outline-variant text-on-surface px-4 py-2 rounded-full font-label-md text-label-md hover:bg-surface-container-low transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">download</span>
+        Export
+        <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+</button>
+<div class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-surface-container-high py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+<button class="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-green-600">table_chart</span> Export to Google Sheets
+        </button>
+<button class="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-blue-600">image</span> Download as PNG
+        </button>
+<button class="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-primary">calendar_add_on</span> Export to Calendar
+        </button>
+</div>
+</div><button class="hidden md:flex items-center justify-center bg-primary text-on-primary px-4 py-2 rounded-full font-label-md text-label-md hover:-translate-y-[1px] shadow-sm transition-all active:scale-95">
+                Create Event
+            </button>
+<div class="flex items-center gap-2">
+<button class="p-2 text-gray-500 hover:text-[#00aeef] hover:bg-gray-50 rounded-full transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="p-2 text-gray-500 hover:text-[#00aeef] hover:bg-gray-50 rounded-full transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full ml-2 border border-outline-variant overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a young professional woman smiling warmly in soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAck6a7soZv03VwYsKoQIAU1dsP6imrqDXpPkb7iXCHXzHvO0nwed7juM0kXLxEeI8z8wh7E9Qb_HyD7V2LP2MpbM-EsmdxuHq7FEPdToKSTIQUk-nh9XWVJ-Axi2S4VSr2xg2QeD0a4dlJlsyNs6iRgETm3Wc3gS9oKazOJhw3ahQiB-Gi6pVgnXlP6ZyOxxpjIM67yDwu_YsfSBlPkqaZlSLernyOQuruXCr4BYQ9Zxx3RPXD_3h6WJF651wiUJMuvYrZqFtdGAcf"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col py-4 bg-gray-50 border-r border-gray-200 shadow-[1px_0_3px_rgba(0,0,0,0.02)] z-40">
+<div class="px-6 pb-6">
+<h2 class="text-lg font-bold text-gray-900 font-headline-md text-headline-md">ESN Dashboard</h2>
+<p class="font-body-sm text-body-sm text-gray-500">Community Manager</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-3">
+<a class="bg-cyan-50 text-[#00aeef] border-r-4 border-[#00aeef] flex items-center gap-3 px-3 py-3 rounded-l-lg font-['Plus_Jakarta_SANS'] text-sm font-medium active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+                Event Calendar
+            </a>
+<a class="text-gray-600 hover:bg-gray-100 hover:translate-x-1 transition-transform duration-200 flex items-center gap-3 px-3 py-3 rounded-lg font-['Plus_Jakarta_SANS'] text-sm font-medium active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">groups</span>
+                Member List
+            </a>
+<a class="text-gray-600 hover:bg-gray-100 hover:translate-x-1 transition-transform duration-200 flex items-center gap-3 px-3 py-3 rounded-lg font-['Plus_Jakarta_SANS'] text-sm font-medium active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">event_note</span>
+                Special Days
+            </a>
+<a class="text-gray-600 hover:bg-gray-100 hover:translate-x-1 transition-transform duration-200 flex items-center gap-3 px-3 py-3 rounded-lg font-['Plus_Jakarta_SANS'] text-sm font-medium active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">chat</span>
+                Messaging
+            </a>
+<a class="text-gray-600 hover:bg-gray-100 hover:translate-x-1 transition-transform duration-200 flex items-center gap-3 px-3 py-3 rounded-lg font-['Plus_Jakarta_SANS'] text-sm font-medium active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">folder_open</span>
+                Resources
+            </a>
+</nav>
+<div class="px-6 py-4">
+<button class="w-full flex items-center justify-center gap-2 bg-white border border-[#00aeef] text-[#00aeef] px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-cyan-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                Invite Member
+            </button>
+</div>
+<div class="mt-auto px-3 flex flex-col gap-1 border-t border-gray-200 pt-4">
+<a class="text-gray-600 hover:bg-gray-100 hover:translate-x-1 transition-transform duration-200 flex items-center gap-3 px-3 py-2 rounded-lg font-['Plus_Jakarta_SANS'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+                Help Center
+            </a>
+<a class="text-gray-600 hover:bg-gray-100 hover:translate-x-1 transition-transform duration-200 flex items-center gap-3 px-3 py-2 rounded-lg font-['Plus_Jakarta_SANS'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="ml-64 mt-16 h-[calc(100vh-64px)] p-6 flex gap-6 overflow-hidden">
+<!-- Calendar View Area -->
+<section class="flex-1 flex flex-col bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,109,0.05)] border border-surface-container-high overflow-hidden">
+<!-- Calendar Header -->
+<div class="px-6 py-4 border-b border-surface-container-high flex justify-between items-center bg-surface-bright">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">October 2023</h1>
+<div class="flex items-center gap-1 bg-surface-container-low rounded-lg p-1 border border-outline-variant/30">
+<button class="p-1.5 rounded text-on-surface-variant hover:bg-white hover:shadow-sm transition-all"><span class="material-symbols-outlined text-[20px]">chevron_left</span></button>
+<button class="px-3 py-1.5 rounded font-label-md text-label-md text-on-surface hover:bg-white hover:shadow-sm transition-all">Today</button>
+<button class="p-1.5 rounded text-on-surface-variant hover:bg-white hover:shadow-sm transition-all"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
+</div>
+</div>
+<div class="flex gap-2">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-fixed/30 text-on-primary-fixed font-label-md text-label-md border border-primary-fixed">Social</span>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed font-label-md text-label-md border border-secondary-fixed">Cultural</span>
+</div>
+</div>
+<!-- Calendar Grid -->
+<div class="flex-1 flex flex-col overflow-hidden">
+<!-- Days Header -->
+<div class="grid grid-cols-7 border-b border-surface-container-high bg-surface-container-low/50">
+<div class="py-2 text-center font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Sun</div>
+<div class="py-2 text-center font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Mon</div>
+<div class="py-2 text-center font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Tue</div>
+<div class="py-2 text-center font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Wed</div>
+<div class="py-2 text-center font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Thu</div>
+<div class="py-2 text-center font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Fri</div>
+<div class="py-2 text-center font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Sat</div>
+</div>
+<!-- Cells -->
+<div class="flex-1 grid grid-cols-7 grid-rows-5 bg-surface-container-high gap-[1px]">
+<!-- Week 1 -->
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-outline-variant">1</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-outline-variant">2</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-outline-variant">3</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-outline-variant">4</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">5</span>
+<div class="bg-primary-container/10 border border-primary-container/20 px-2 py-1 rounded text-primary-container font-label-md text-label-md cursor-pointer hover:bg-primary-container/20">
+<div class="font-bold">Welcome Dinner</div>
+<div class="text-[10px] mt-1 flex flex-col gap-0.5 opacity-80">
+<div class="flex items-center gap-1">Lukas W.</div>
+<div class="flex items-center gap-1">Anna S.</div>
+</div>
+</div>
+<div class="flex -space-x-2 mt-auto">
+<img class="w-6 h-6 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcB2hIZmRSeWX1I2aWSJPdAgzlwe9IMGOdtcItbYouB2SUd5DxCzl0c9y_k_hMDk_MD0INH7VHCWOr_4NQ4FJ06aJzhAmzt2t-gVSjzbjvBHcnbrzyF22sbKytMnKNG_KbCoVMa0pkPmEzxNRgxYx_nkOhm-FXI7kPj5N3miq7c_yAbCHdKBKqoC9tC65z0aFNLZeStjYyo9GZSK3QNerrOnb7no8hUb9k6vpRzxRKoFTF8sNsW9a-XDwSzPjoJPKAabNG6sziTr4o"/>
+<img class="w-6 h-6 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKS5It6kJUE_ve_N8HVtecZrcf85PcXBl9pmFFdLdR9FQDUeDuCu2bPnLtXZsxyBcIqdYW8AhQ7o1r1aMGP8ApXsn8qO7ZaTJY0Ol8Fz7G7SgXYJbq_dCtKVVAPGYyk7DXSqIkxjtkr0il-hu4Q_ZlAxfBOSWmESU0r0CXNmlz_bP0bi-Tya_6OASOUkGVDc_F1rFflQH9696jzC9ilme4RsooVPoomine0I4_DGmEyjippGBF3mbsUr6pesE6Qe2-IVzfiyWSpnJK"/>
+</div></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">6</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">7</span></div>
+<!-- Week 2 -->
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">8</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">9</span>
+<div class="bg-secondary-container/10 border border-secondary-container/20 px-2 py-1 rounded text-secondary-container font-label-md text-label-md cursor-pointer hover:bg-secondary-container/20">
+<div class="font-bold">City Tour</div>
+</div></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1">
+<span class="self-end font-label-md text-label-md text-on-surface">10</span>
+</div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">11</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">12</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1 bg-surface-container-low/50"><span class="self-end font-label-md text-label-md text-white bg-primary rounded-full w-6 h-6 flex items-center justify-center">13</span>
+<div class="bg-tertiary-container/10 border border-tertiary-container/20 px-2 py-1 rounded text-tertiary-container font-label-md text-label-md cursor-pointer hover:bg-tertiary-container/20">
+<div class="font-bold">Language Tandem</div>
+<div class="text-[10px] mt-1 opacity-80 flex items-center gap-1">David C.</div>
+</div>
+<div class="flex -space-x-2 mt-auto">
+<img class="w-6 h-6 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyMvl6IleT2lmc5u8Z1eGp-nn2BzuoD8-0jqezL_ezD3nrP5tPk9UwnlPeSAj9PW49UgPnv5I74XK9YEsnBRwV4D7buVXA_bWdLnInAl8g1ijoVi0BuY3J6onHZd6W7elB1GoS5tClV5JtaL1vK1Kz434gr29HzOvC2QluPk_3PgD-vfE78p_q0rmNLv4ECfyDfkVHFaZd9tSr33c3DrtNp0oEmxGTOya1Wbx0qjnMeqwU1fweau301kBCPo0U3O7DPTux3allFQb5"/>
+</div></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">14</span></div>
+<!-- Remaining empty cells for brevity in structure -->
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">5</span>
+<div class="bg-primary-container/10 border border-primary-container/20 px-2 py-1 rounded text-primary-container font-label-md text-label-md cursor-pointer hover:bg-primary-container/20">
+<div class="font-bold">Welcome Dinner</div>
+<div class="text-[10px] mt-1 flex flex-col gap-0.5 opacity-80">
+<div class="flex items-center gap-1">Lukas W.</div>
+<div class="flex items-center gap-1">Anna S.</div>
+</div>
+</div>
+<div class="flex -space-x-2 mt-auto">
+<img class="w-6 h-6 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcB2hIZmRSeWX1I2aWSJPdAgzlwe9IMGOdtcItbYouB2SUd5DxCzl0c9y_k_hMDk_MD0INH7VHCWOr_4NQ4FJ06aJzhAmzt2t-gVSjzbjvBHcnbrzyF22sbKytMnKNG_KbCoVMa0pkPmEzxNRgxYx_nkOhm-FXI7kPj5N3miq7c_yAbCHdKBKqoC9tC65z0aFNLZeStjYyo9GZSK3QNerrOnb7no8hUb9k6vpRzxRKoFTF8sNsW9a-XDwSzPjoJPKAabNG6sziTr4o"/>
+<img class="w-6 h-6 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKS5It6kJUE_ve_N8HVtecZrcf85PcXBl9pmFFdLdR9FQDUeDuCu2bPnLtXZsxyBcIqdYW8AhQ7o1r1aMGP8ApXsn8qO7ZaTJY0Ol8Fz7G7SgXYJbq_dCtKVVAPGYyk7DXSqIkxjtkr0il-hu4Q_ZlAxfBOSWmESU0r0CXNmlz_bP0bi-Tya_6OASOUkGVDc_F1rFflQH9696jzC9ilme4RsooVPoomine0I4_DGmEyjippGBF3mbsUr6pesE6Qe2-IVzfiyWSpnJK"/>
+</div></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">16</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">17</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">18</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">9</span>
+<div class="bg-secondary-container/10 border border-secondary-container/20 px-2 py-1 rounded text-secondary-container font-label-md text-label-md cursor-pointer hover:bg-secondary-container/20">
+<div class="font-bold">City Tour</div>
+</div></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">20</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">21</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">22</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">23</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">24</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">5</span>
+<div class="bg-primary-container/10 border border-primary-container/20 px-2 py-1 rounded text-primary-container font-label-md text-label-md cursor-pointer hover:bg-primary-container/20">
+<div class="font-bold">Welcome Dinner</div>
+<div class="text-[10px] mt-1 flex flex-col gap-0.5 opacity-80">
+<div class="flex items-center gap-1">Lukas W.</div>
+<div class="flex items-center gap-1">Anna S.</div>
+</div>
+</div>
+<div class="flex -space-x-2 mt-auto">
+<img class="w-6 h-6 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcB2hIZmRSeWX1I2aWSJPdAgzlwe9IMGOdtcItbYouB2SUd5DxCzl0c9y_k_hMDk_MD0INH7VHCWOr_4NQ4FJ06aJzhAmzt2t-gVSjzbjvBHcnbrzyF22sbKytMnKNG_KbCoVMa0pkPmEzxNRgxYx_nkOhm-FXI7kPj5N3miq7c_yAbCHdKBKqoC9tC65z0aFNLZeStjYyo9GZSK3QNerrOnb7no8hUb9k6vpRzxRKoFTF8sNsW9a-XDwSzPjoJPKAabNG6sziTr4o"/>
+<img class="w-6 h-6 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKS5It6kJUE_ve_N8HVtecZrcf85PcXBl9pmFFdLdR9FQDUeDuCu2bPnLtXZsxyBcIqdYW8AhQ7o1r1aMGP8ApXsn8qO7ZaTJY0Ol8Fz7G7SgXYJbq_dCtKVVAPGYyk7DXSqIkxjtkr0il-hu4Q_ZlAxfBOSWmESU0r0CXNmlz_bP0bi-Tya_6OASOUkGVDc_F1rFflQH9696jzC9ilme4RsooVPoomine0I4_DGmEyjippGBF3mbsUr6pesE6Qe2-IVzfiyWSpnJK"/>
+</div></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">26</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">27</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">28</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">9</span>
+<div class="bg-secondary-container/10 border border-secondary-container/20 px-2 py-1 rounded text-secondary-container font-label-md text-label-md cursor-pointer hover:bg-secondary-container/20">
+<div class="font-bold">City Tour</div>
+</div></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">30</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-on-surface">31</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-outline-variant">1</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-outline-variant">2</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-outline-variant">3</span></div>
+<div class="bg-surface-container-lowest p-2 flex flex-col gap-1"><span class="self-end font-label-md text-label-md text-outline-variant">4</span></div>
+</div>
+</div>
+</section>
+<!-- Right Sidebar (Data Panels) -->
+<section class="w-80 flex flex-col gap-6 overflow-hidden">
+<!-- Special Days Box -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,109,0.05)] border border-surface-container-high flex flex-col shrink-0">
+<div class="px-5 py-4 border-b border-surface-container-high flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Special Days</h3>
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+</div>
+<div class="p-3 flex flex-col gap-1">
+<div class="flex items-start gap-3 p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="bg-secondary-fixed/50 text-on-secondary-fixed p-1.5 rounded-md flex items-center justify-center mt-0.5">
+<span class="material-symbols-outlined text-[18px]">school</span>
+</div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface">World Teachers' Day</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Oct 5 • Global</div>
+</div>
+</div>
+<div class="flex items-start gap-3 p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="bg-primary-fixed/50 text-on-primary-fixed p-1.5 rounded-md flex items-center justify-center mt-0.5">
+<span class="material-symbols-outlined text-[18px]">public</span>
+</div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface">UN Day</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Oct 24 • International</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Members List (Drag & Drop) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,109,0.05)] border border-surface-container-high flex flex-col flex-1 overflow-hidden">
+<div class="px-5 py-4 border-b border-surface-container-high flex items-center justify-between bg-surface-bright">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Members List</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Drag to assign to events</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">drag_indicator</span>
+</div>
+<div class="p-3 overflow-y-auto no-scrollbar flex flex-col gap-1">
+<!-- Draggable Member -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container-low transition-colors cursor-grab border border-transparent hover:border-outline-variant/30 group">
+<img class="w-10 h-10 rounded-full object-cover border border-surface-container-high" data-alt="close-up portrait of a young professional woman smiling warmly in soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyH2mrQP8VFGtdygjYKssxNCH-nDKVVbtR0644_zUjV5vv5yv9wJ3XlZo1AUVA-pq8vbuItQgUR1BO6JTjTPHMPXshO1OY6KqeDUerGr4yab3ciPRo2p_gQPv_DXUdW7pwYR2NsHWb49TUBJkxHGiGuMtdzTC8tVChMAnh_kjeZs3b_F4wvia-nD2AZScgXjKFrWbwnSzEkD8dji0iuMen6WNMVzRN_Ck1-dHNZE2qEv3GZutdt5likDFShz4g7qyh-obhUVZ0lgoH"/>
+<div class="flex-1">
+<div class="font-label-lg text-label-lg text-on-surface">Maria Garcia</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Event Coordinator</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container-low transition-colors cursor-grab border border-transparent hover:border-outline-variant/30 group">
+<img class="w-10 h-10 rounded-full object-cover border border-surface-container-high" data-alt="portrait of a young smiling man in natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAXzR8y4yd1HPBjGBQ13iNjbvwyK5SYedLOEWaxouigr7btTTIJL1wPD27oTZD1yXLL_3ZNzul1whdK3yDSKM6x2B1Qavn_fWNiu2uPI9E80rx8SwDdPR-Dsa8JLf7ZRb0-AV3g2bMmzvk1uFlXwDbrQAXzZAmjF5pygxlkWPMhuuBEmHRmLTYwbzbHZY6wnz2OX-WrXkbSLOOYOm7PIdkYGABv9NFuN7vXaeJwZaAyh88aibFspsBuFbM0POrULL2M2HoyFRCpuc4"/>
+<div class="flex-1">
+<div class="font-label-lg text-label-lg text-on-surface">Lukas Weber</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Volunteer</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container-low transition-colors cursor-grab border border-transparent hover:border-outline-variant/30 group">
+<img class="w-10 h-10 rounded-full object-cover border border-surface-container-high" data-alt="portrait of a confident young woman with soft background blur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkggrR7xMLMs1-0RLBQPo67My-8-sWzXy2cJXUDw3qWvYDAFu-rjBfJItD4x-8MZjQww1OkmSz40N8GPKjIgztmXNZDwF32ky4TFn86FN78VFGBpOHkeHCviAU4Xyv_OXJsdnBOX5LXzsbbVoqf4SDN7KpXUNuLglSyQhT6q-VZbJtI6z5sGxNifKBrxVzlwmfByF6n2AO3LADizKSco48UJInbte1cP6e5AIyL7y7-GTn_i-VTVAGdh4ZwxVl_qzy4pQch6uc-PwW"/>
+<div class="flex-1">
+<div class="font-label-lg text-label-lg text-on-surface">Anna Schmidt</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">President</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container-low transition-colors cursor-grab border border-transparent hover:border-outline-variant/30 group">
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-headline-md text-headline-md border border-surface-container-high">
+                            JD
+                        </div>
+<div class="flex-1">
+<div class="font-label-lg text-label-lg text-on-surface">John Doe</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">New Member</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container-low transition-colors cursor-grab border border-transparent hover:border-outline-variant/30 group">
+<img class="w-10 h-10 rounded-full object-cover border border-surface-container-high" data-alt="portrait of a cheerful man with glasses in a bright room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUP587l71K4xjfqdAj2zkJOaqaJLEPLjD70dfPwLOHwRktFi4s8cv3BcyrKdi4Ytl-6t3AZvaRXJWoNNSmH6BY5HaGmMIrhpIZa8ZIh-UiN5wGXt9ODHy_F-7Q3hbtJ-un4gZzUdu14gnJfadaBwsxYEma5P6EuCE3ohB-OksEOX7gSAjvarXrQDhaZ0r6wYVKnAzSri4wlCSlQ4oNzyWKUoQsGUItwA4LxQ5gMuAqtTgIyFNSNfHIXQtf7P60F0O1UT2dZbhSlnQw"/>
+<div class="flex-1">
+<div class="font-label-lg text-label-lg text-on-surface">David Chen</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Treasurer</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>
