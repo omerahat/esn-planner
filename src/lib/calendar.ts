@@ -12,6 +12,11 @@ export const toIsoDate = (date: Date): string => {
   return `${y}-${m}-${d}`;
 };
 
+export const fromIsoDate = (isoDate: string): Date => {
+  const [year, month, day] = isoDate.split("-").map((chunk) => Number(chunk));
+  return new Date(year, (month || 1) - 1, day || 1);
+};
+
 export const getDaysOfWeek = (): string[] => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export type CalendarCell = {
@@ -50,3 +55,10 @@ export const buildMonthCells = (viewDate: Date): CalendarCell[] => {
 
   return cells;
 };
+
+export const isDateInRange = (isoDate: string, startDate: string, endDate: string): boolean =>
+  isoDate >= startDate && isoDate <= endDate;
+
+export const isRangeStart = (isoDate: string, startDate: string): boolean => isoDate === startDate;
+
+export const isRangeEnd = (isoDate: string, endDate: string): boolean => isoDate === endDate;

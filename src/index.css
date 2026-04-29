@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #04006d;
+  --color-brand-navy: #2e3192;
+  --color-brand-blue: #00aeef;
+  --color-brand-green: #7ac143;
+  --color-brand-orange: #f47b20;
+  --color-brand-pink: #ae008c;
+  font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--color-brand-navy);
 }
 
 * {
@@ -11,4 +16,16 @@
 
 body {
   margin: 0;
+}
+
+.font-heading {
+  font-family: "Kelson Sans", "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.text-brand-navy {
+  color: var(--color-brand-navy);
+}
+
+.bg-brand-blue {
+  background-color: var(--color-brand-blue);
 }

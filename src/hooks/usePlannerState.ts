@@ -1,47 +1,59 @@
 import { useEffect, useMemo, useState } from "react";
-import { initialEvents, initialMembers } from "../data/initialData";
-import type { PlannerEvent } from "../types";
-
-const STORAGE_KEY = "esn-event-planner-state-v1";
-
-const parseStoredEvents = (): PlannerEvent[] | null => {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) {
-    return null;
-  }
-
-  try {
-    const parsed = JSON.parse(raw) as PlannerEvent[];
-    if (!Array.isArray(parsed)) {
-      return null;
-    }
-    return parsed;
-  } catch {
-    return null;
-  }
-};
+import { initialMembers } from "../data/initialData";
+import {
+  createDefaultPlannerState,
+  decodeSharedState,
+  migrateV1Events,
+  parseStoredState,
+  STORAGE_KEY,
+} from "../lib/shareState";
+import type { PlannerEvent, PlannerStateV2, SpecialDateRange } from "../types";
 
 export const usePlannerState = () => {
-  const [events, setEvents] = useState<PlannerEvent[]>(() => parseStoredEvents() ?? initialEvents);
+  const [state, setState] = useState<PlannerStateV2>(() => {
+    const shared = decodeSharedState(new URLSearchParams(window.location.search).get("data"));
+    if (shared) return shared;
+
+    const v2 = parseStoredState();
+    if (v2) return v2;
+
+    const v1Raw = localStorage.getItem("esn-event-planner-state-v1");
+    if (v1Raw) {
+      try {
+        const migrated = migrateV1Events(JSON.parse(v1Raw));
+        if (migrated) return migrated;
+      } catch {
+        // Ignore invalid legacy data.
+      }
+    }
+    return createDefaultPlannerState();
+  });
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
-  }, [events]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }, [state]);
 
-  const addEvent = (payload: { title: string; date: string; time: string }) => {
+  const addEvent = (payload: {
+    title: string;
+    date: string;
+    categoryId: PlannerEvent["categoryId"];
+    emojiOrIcon?: string;
+  }) => {
     const event: PlannerEvent = {
       id: crypto.randomUUID(),
       title: payload.title,
       date: payload.date,
-      time: payload.time,
+      categoryId: payload.categoryId,
+      emojiOrIcon: payload.emojiOrIcon?.trim() ?? "",
       assignedMemberIds: [],
     };
-    setEvents((current) => [...current, event]);
+    setState((current) => ({ ...current, events: [...current.events, event] }));
   };
 
   const assignMember = (eventId: string, memberId: string) => {
-    setEvents((current) =>
-      current.map((event) => {
+    setState((current) => ({
+      ...current,
+      events: current.events.map((event) => {
         if (event.id !== eventId || event.assignedMemberIds.includes(memberId)) {
           return event;
         }
@@ -50,12 +62,13 @@ export const usePlannerState = () => {
           assignedMemberIds: [...event.assignedMemberIds, memberId],
         };
       }),
-    );
+    }));
   };
 
   const unassignMember = (eventId: string, memberId: string) => {
-    setEvents((current) =>
-      current.map((event) => {
+    setState((current) => ({
+      ...current,
+      events: current.events.map((event) => {
         if (event.id !== eventId) {
           return event;
         }
@@ -64,7 +77,7 @@ export const usePlannerState = () => {
           assignedMemberIds: event.assignedMemberIds.filter((id) => id !== memberId),
         };
       }),
-    );
+    }));
   };
 
   const updateEvent = (
@@ -72,12 +85,14 @@ export const usePlannerState = () => {
     payload: {
       title: string;
       date: string;
-      time: string;
+      categoryId: PlannerEvent["categoryId"];
+      emojiOrIcon?: string;
       assignedMemberIds: string[];
     },
   ) => {
-    setEvents((current) =>
-      current.map((event) => {
+    setState((current) => ({
+      ...current,
+      events: current.events.map((event) => {
         if (event.id !== eventId) {
           return event;
         }
@@ -85,16 +100,25 @@ export const usePlannerState = () => {
           ...event,
           title: payload.title,
           date: payload.date,
-          time: payload.time,
+          categoryId: payload.categoryId,
+          emojiOrIcon: payload.emojiOrIcon?.trim() ?? "",
           assignedMemberIds: [...new Set(payload.assignedMemberIds)],
         };
       }),
-    );
+    }));
+  };
+
+  const deleteEvent = (eventId: string) => {
+    setState((current) => ({
+      ...current,
+      events: current.events.filter((event) => event.id !== eventId),
+    }));
   };
 
   const moveEventToDate = (eventId: string, targetDate: string) => {
-    setEvents((current) =>
-      current.map((event) => {
+    setState((current) => ({
+      ...current,
+      events: current.events.map((event) => {
         if (event.id !== eventId || event.date === targetDate) {
           return event;
         }
@@ -103,27 +127,67 @@ export const usePlannerState = () => {
           date: targetDate,
         };
       }),
-    );
+    }));
+  };
+
+  const addDateRange = (payload: Omit<SpecialDateRange, "id">) => {
+    setState((current) => ({
+      ...current,
+      specialDateRanges: [...current.specialDateRanges, { ...payload, id: crypto.randomUUID() }],
+    }));
+  };
+
+  const deleteDateRange = (rangeId: string) => {
+    setState((current) => ({
+      ...current,
+      specialDateRanges: current.specialDateRanges.filter((range) => range.id !== rangeId),
+    }));
+  };
+
+  const setViewDateIso = (viewDateIso: string) => {
+    setState((current) => ({
+      ...current,
+      viewState: current.viewState.viewDateIso === viewDateIso ? current.viewState : { viewDateIso },
+    }));
+  };
+
+  const replacePlannerState = (nextState: PlannerStateV2) => {
+    setState(nextState);
+  };
+
+  const resetPlannerState = () => {
+    setState(createDefaultPlannerState());
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem("esn-event-planner-state-v1");
   };
 
   const eventsByDate = useMemo(() => {
-    return events.reduce<Record<string, PlannerEvent[]>>((acc, event) => {
+    return state.events.reduce<Record<string, PlannerEvent[]>>((acc, event) => {
       if (!acc[event.date]) {
         acc[event.date] = [];
       }
       acc[event.date].push(event);
       return acc;
     }, {});
-  }, [events]);
+  }, [state.events]);
 
   return {
-    members: initialMembers,
-    events,
+    members: state.members.length > 0 ? state.members : initialMembers,
+    events: state.events,
+    specialDateRanges: state.specialDateRanges,
+    viewState: state.viewState,
+    plannerState: state,
     eventsByDate,
     addEvent,
     assignMember,
     unassignMember,
     updateEvent,
+    deleteEvent,
     moveEventToDate,
+    addDateRange,
+    deleteDateRange,
+    setViewDateIso,
+    replacePlannerState,
+    resetPlannerState,
   };
 };

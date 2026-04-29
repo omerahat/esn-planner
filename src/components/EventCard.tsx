@@ -1,6 +1,7 @@
-import { Clock3, GripVertical } from "lucide-react";
+import { GripVertical } from "lucide-react";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import type { Member, PlannerEvent } from "../types";
+import { getCategoryMeta } from "../lib/plannerConfig";
 
 type EventCardProps = {
   event: PlannerEvent;
@@ -17,6 +18,7 @@ const initials = (name: string): string =>
     .join("");
 
 export const EventCard = ({ event, membersById, onClick }: EventCardProps) => {
+  const categoryMeta = getCategoryMeta(event.categoryId);
   const { setNodeRef, isOver } = useDroppable({ id: `event:${event.id}` });
   const { attributes, listeners, setNodeRef: setDragRef, transform, isDragging } = useDraggable({
     id: `eventDrag:${event.id}`,
@@ -42,12 +44,13 @@ export const EventCard = ({ event, membersById, onClick }: EventCardProps) => {
       {...listeners}
       {...attributes}
     >
-      <p className="flex items-center gap-1 truncate text-sm font-semibold text-[#04006d]">
+      <p className="flex items-center gap-1 truncate text-sm font-semibold text-brand-navy">
         <GripVertical size={12} className="text-slate-400" />
+        {event.emojiOrIcon?.trim() ? <span>{event.emojiOrIcon.trim()}</span> : null}
         {event.title}
       </p>
-      <p className="mt-1 flex items-center gap-1 text-xs text-slate-600">
-        <Clock3 size={12} /> {event.time}
+      <p className="mt-1 text-xs font-medium" style={{ color: categoryMeta.color }}>
+        {categoryMeta.label}
       </p>
       <div className="mt-2 flex flex-wrap gap-1">
         {event.assignedMemberIds.map((memberId) => {

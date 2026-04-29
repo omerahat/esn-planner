@@ -1,4 +1,5 @@
 import type { Member, PlannerEvent } from "../types";
+import { MEMBER_STATUSES } from "../lib/plannerConfig";
 
 const memberNames = [
   "azra",
@@ -32,12 +33,13 @@ const memberNames = [
   "yusuf",
 ];
 
-const palette = ["#ec008c", "#7ac143", "#f47c36", "#00aeef"];
+const palette = ["#2e3192", "#00aeef", "#7ac143", "#f47b20", "#ae008c"];
 
 export const initialMembers: Member[] = memberNames.map((name, index) => ({
   id: String(index + 1),
   name,
   color: palette[index % palette.length],
+  status: MEMBER_STATUSES[index % MEMBER_STATUSES.length],
 }));
 
 export const initialEvents: PlannerEvent[] = [
@@ -48,7 +50,8 @@ export const initialEvents: PlannerEvent[] = [
       2,
       "0",
     )}-05`,
-    time: "21:00",
+    categoryId: "event-comm",
+    emojiOrIcon: "🎉",
     assignedMemberIds: ["1", "2"],
   },
 ];

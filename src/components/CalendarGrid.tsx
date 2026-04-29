@@ -1,11 +1,12 @@
 import { useDroppable } from "@dnd-kit/core";
-import type { PlannerEvent, Member } from "../types";
-import { buildMonthCells, getDaysOfWeek } from "../lib/calendar";
+import type { PlannerEvent, Member, SpecialDateRange } from "../types";
+import { buildMonthCells, getDaysOfWeek, isDateInRange, isRangeEnd, isRangeStart } from "../lib/calendar";
 import { EventCard } from "./EventCard";
 
 type CalendarGridProps = {
   viewDate: Date;
   eventsByDate: Record<string, PlannerEvent[]>;
+  specialDateRanges: SpecialDateRange[];
   membersById: Record<string, Member>;
   onDayClick: (isoDate: string) => void;
   onEventClick: (eventId: string) => void;
@@ -16,6 +17,7 @@ type DayCellProps = {
   dayNumber: number;
   inCurrentMonth: boolean;
   dayEvents: PlannerEvent[];
+  dayRanges: SpecialDateRange[];
   membersById: Record<string, Member>;
   onDayClick: (isoDate: string) => void;
   onEventClick: (eventId: string) => void;
@@ -26,6 +28,7 @@ const DayCell = ({
   dayNumber,
   inCurrentMonth,
   dayEvents,
+  dayRanges,
   membersById,
   onDayClick,
   onEventClick,
@@ -47,6 +50,18 @@ const DayCell = ({
         {dayNumber}
       </button>
       <div className="mt-2 space-y-2">
+        {dayRanges.map((range) => (
+          <div
+            key={range.id}
+            className={`truncate px-2 py-1 text-[11px] font-semibold text-white ${
+              isRangeStart(isoDate, range.startDate) ? "rounded-l-full" : ""
+            } ${isRangeEnd(isoDate, range.endDate) ? "rounded-r-full" : ""}`}
+            style={{ backgroundColor: range.color }}
+            title={range.description}
+          >
+            {isRangeStart(isoDate, range.startDate) ? range.description : "\u00A0"}
+          </div>
+        ))}
         {dayEvents.map((event) => (
           <EventCard key={event.id} event={event} membersById={membersById} onClick={onEventClick} />
         ))}
@@ -58,6 +73,7 @@ const DayCell = ({
 export const CalendarGrid = ({
   viewDate,
   eventsByDate,
+  specialDateRanges,
   membersById,
   onDayClick,
   onEventClick,
@@ -75,6 +91,9 @@ export const CalendarGrid = ({
 
         {cells.map((cell) => {
           const dayEvents = eventsByDate[cell.isoDate] ?? [];
+          const dayRanges = specialDateRanges.filter((range) =>
+            isDateInRange(cell.isoDate, range.startDate, range.endDate),
+          );
           return (
             <DayCell
               key={cell.isoDate}
@@ -82,6 +101,7 @@ export const CalendarGrid = ({
               dayNumber={cell.date.getDate()}
               inCurrentMonth={cell.inCurrentMonth}
               dayEvents={dayEvents}
+              dayRanges={dayRanges}
               membersById={membersById}
               onDayClick={onDayClick}
               onEventClick={onEventClick}
