@@ -20,6 +20,11 @@ const memberSeeds: Array<{ name: string; status: Member["status"] }> = [
   { name: "Azra Naz Eralp", status: "Board Supporter" },
   { name: "Odelli Eroğlu", status: "Active" },
   { name: "Nehir Özyurt", status: "Board" },
+  { name: "Yusuf Efe Kankılıç", status: "Candidate" },
+  { name: "Hilal Efe", status: "Candidate" },
+  { name: "Merve Örgel", status: "Candidate" },
+  { name: "Sera Öztaşkent", status: "Active" },
+  { name: "Behice Gül Kaya", status: "Candidate" },
 ];
 
 export const initialMembers: Member[] = memberSeeds.map((member, index) => ({
